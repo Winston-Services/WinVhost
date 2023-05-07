@@ -3,6 +3,7 @@
         "fqdn": "dreamingrainbow.com",
         "enableWWW": true,
         "enableSSL": false,
+        "redirect" : true,
         "ssl": {
             "hostname": "dreamingrainbow.com",
             "cert": "undefined",
@@ -14,6 +15,7 @@
         "fqdn": "winston.services",
         "enableWWW": true,
         "enableSSL": false,
+        "redirect" : true,
         "ssl": {
             "hostname": "winston.services",
             "cert": "undefined",
@@ -25,6 +27,7 @@
         "fqdn": "news.winston.services",
         "enableWWW": false,
         "enableSSL": false,
+        "redirect" : true,
         "ssl": {
             "hostname": "news.winston.services",
             "cert": "undefined",

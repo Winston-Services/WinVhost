@@ -90,17 +90,17 @@ const StartHost = (host) => {
     }),
     express.static(host.fqdn, {
       dotfiles: "allow",
-      redirect: false,
+      redirect: host.redirect,
       index: "index.html"
     }),
-    serveIndex(`${host.fqdn}/*`, { icons: true })
+    serveIndex(`${host.fqdn}/public/*`, { icons: true })
   );
   vhostApp.get("/*", (req, res, next) => {
     //try base static files first
     const baseFilePath = req.path;
     return res.sendFile(
       path.resolve(
-        path.join(`${host.fqdn}`, baseFilePath) //req.path
+        path.join(`${host.fqdn}/public`, baseFilePath) //req.path
       )
     );
   });
