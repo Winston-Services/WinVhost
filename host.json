@@ -1,0 +1,35 @@
+[
+    {
+        "fqdn": "dreamingrainbow.com",
+        "enableWWW": true,
+        "enableSSL": false,
+        "ssl": {
+            "hostname": "dreamingrainbow.com",
+            "cert": "undefined",
+            "ca": "undefined",
+            "key": "undefined"
+        }
+    },
+    {
+        "fqdn": "abc.com",
+        "enableWWW": true,
+        "enableSSL": false,
+        "ssl": {
+            "hostname": "abc.com",
+            "cert": "undefined",
+            "ca": "undefined",
+            "key": "undefined"
+        }
+    },
+    {
+        "fqdn": "xyz.com",
+        "enableWWW": true,
+        "enableSSL": false,
+        "ssl": {
+            "hostname": "xyz.com",
+            "cert": "undefined",
+            "ca": "undefined",
+            "key": "undefined"
+        }
+    }
+]
