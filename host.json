@@ -11,22 +11,22 @@
         }
     },
     {
-        "fqdn": "abc.com",
+        "fqdn": "winston.services",
         "enableWWW": true,
         "enableSSL": false,
         "ssl": {
-            "hostname": "abc.com",
+            "hostname": "winston.services",
             "cert": "undefined",
             "ca": "undefined",
             "key": "undefined"
         }
     },
     {
-        "fqdn": "xyz.com",
-        "enableWWW": true,
+        "fqdn": "news.winston.services",
+        "enableWWW": false,
         "enableSSL": false,
         "ssl": {
-            "hostname": "xyz.com",
+            "hostname": "news.winston.services",
             "cert": "undefined",
             "ca": "undefined",
             "key": "undefined"
