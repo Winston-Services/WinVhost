@@ -112,7 +112,7 @@ const StartHost = (host) => {
     } else {
       return res.sendFile(
         path.resolve(
-          path.join(`${host.fqdn}/public`, baseFilePath, 'index.html') //req.path
+          path.join(`${host.fqdn}/public`, 'index.html') //req.path
         )
       );
     }
