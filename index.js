@@ -109,7 +109,13 @@ const StartHost = (host) => {
           path.join(`${host.fqdn}/public`, baseFilePath) //req.path
         )
       );
-    } else return next();
+    } else {
+      return res.sendFile(
+        path.resolve(
+          path.join(`${host.fqdn}/public`, baseFilePath, 'index.html') //req.path
+        )
+      );
+    }
   });
   console.log("Loading Virtual Host");
   primaryService.use(vhost(host.fqdn, vhostApp));
