@@ -64,6 +64,7 @@ let sslCredentials = hosts.map((h) => {
   if (h.ssl.enableSSL) {
     console.log(fs.readFileSync(h.ssl.cert).toString());
     return {
+      hostname: h.ssl.hostname,
       cert:
         h.ssl.cert !== "undefined"
           ? fs.readFileSync(h.ssl.cert).toString()
@@ -79,6 +80,7 @@ let sslCredentials = hosts.map((h) => {
     };
   } else {
     return {
+      hostname: h.ssl.hostname,
       cert: undefined,
       ca: undefined,
       key: undefined
