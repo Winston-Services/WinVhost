@@ -147,7 +147,7 @@ const StartHost = (host) => {
 hosts.forEach((h) => {
   StartHost(h);
 });
-if (process.env.NODEJS_WEBHOST_ENABLE_SSL === true) {
+if (process.env.NODEJS_WEBHOST_ENABLE_SSL === 'true') {
   httpsServer.listen(443, process.env.NODEJS_WEBHOST_BIND_TO_IP, () => {
     console.log("Secure Server Started.");
   });
