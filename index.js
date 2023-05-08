@@ -64,9 +64,9 @@ function handleCorsDelegation(overrideCallback = null) {
 
 let sslCredentials = hosts.map((h) => {
   return {
-    cert: fs.readFileSync(path.resolve(h.ssl.cert)).toString(),
-    ca: fs.readFileSync(path.resolve(h.ssl.ca)).toString(),
-    key: fs.readFileSync(path.resolve(h.ssl.key)).toString()
+    cert: h.ssl.cert !== undefined ? fs.readFileSync(h.ssl.cert).toString() : undefined,
+    ca: h.ssl.cert !== undefined ? fs.readFileSync(h.ssl.ca).toString() : undefined,
+    key: h.ssl.cert !== undefined ? fs.readFileSync(h.ssl.key).toString() : undefined
   };
 });
 
