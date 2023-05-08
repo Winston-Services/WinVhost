@@ -35,9 +35,9 @@ hosts.forEach((h) => {
 
 const defaultCredential = process.env.NODEJS_WEBHOST_ENABLE_SSL
   ? {
-      cert: fs.readFileSync(path.resolve(process.env.NODEJS_WEBHOST_CERT)).toString(),
-      ca: fs.readFileSync(path.resolve(process.env.NODEJS_WEBHOST_CA)).toString(),
-      key: fs.readFileSync(path.resolve(process.env.NODEJS_WEBHOST_KEY)).toString()
+      cert: fs.readFileSync(process.env.NODEJS_WEBHOST_CERT).toString(),
+      ca: fs.readFileSync(process.env.NODEJS_WEBHOST_CA).toString(),
+      key: fs.readFileSync(process.env.NODEJS_WEBHOST_KEY).toString()
     }
   : {
       cert: undefined,
@@ -61,11 +61,29 @@ function handleCorsDelegation(overrideCallback = null) {
 }
 
 let sslCredentials = hosts.map((h) => {
-  return {
-    cert: h.ssl.cert !== 'undefined' ? fs.readFileSync(h.ssl.cert).toString() : undefined,
-    ca: h.ssl.cert !== 'undefined' ? fs.readFileSync(h.ssl.ca).toString() : undefined,
-    key: h.ssl.cert !== 'undefined' ? fs.readFileSync(h.ssl.key).toString() : undefined
-  };
+  if (h.ssl.enableSSL) {
+    console.log(fs.readFileSync(h.ssl.cert).toString());
+    return {
+      cert:
+        h.ssl.cert !== "undefined"
+          ? fs.readFileSync(h.ssl.cert).toString()
+          : undefined,
+      ca:
+        h.ssl.ca !== "undefined"
+          ? fs.readFileSync(h.ssl.ca).toString()
+          : undefined,
+      key:
+        h.ssl.key !== "undefined"
+          ? fs.readFileSync(h.ssl.key).toString()
+          : undefined
+    };
+  } else {
+    return {
+      cert: undefined,
+      ca: undefined,
+      key: undefined
+    };
+  }
 });
 
 let httpsServer;
