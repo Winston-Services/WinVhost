@@ -148,8 +148,12 @@ hosts.forEach((h) => {
   StartHost(h);
 });
 if (process.env.NODEJS_WEBHOST_ENABLE_SSL === true) {
-  httpsServer.listen(443, process.env.NODEJS_WEBHOST_BIND_TO_IP, () => {});
+  httpsServer.listen(443, process.env.NODEJS_WEBHOST_BIND_TO_IP, () => {
+    console.log("Secure Server Started.");
+  });
 }
-httpServer.listen(80, process.env.NODEJS_WEBHOST_BIND_TO_IP, () => {});
+httpServer.listen(80, process.env.NODEJS_WEBHOST_BIND_TO_IP, () => {
+  console.log("Server Ready.");
+});
 
 // primaryService.close();
