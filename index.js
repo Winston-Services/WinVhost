@@ -5,7 +5,7 @@ import cors from "cors";
 import vhost from "vhost";
 import vhttps from "vhttps";
 import serveIndex from "serve-index";
-import {createServer} from "http";
+import { createServer } from "http";
 import { config } from "dotenv";
 config();
 
@@ -62,7 +62,7 @@ function handleCorsDelegation(overrideCallback = null) {
   };
 }
 
-let sslCredentials = hosts.map(h => h.ssl);
+let sslCredentials = hosts.map((h) => h.ssl);
 
 let httpsServer;
 let httpServer;
@@ -82,6 +82,29 @@ const StartHost = (host) => {
   const vhostApp = express();
   vhostApp.disable("x-powered-by");
   vhostApp.set("X-Powered-By", process.env.NODEJS_WEBHOST_NETWORK_NAME);
+  vhostApp.get("/*", (req, res, next) => {
+    //try base static files first
+    const baseFilePath = req.path;
+    console.log(
+      path.resolve(
+        path.join(`${host.fqdn}/public`, baseFilePath) //req.path
+      )
+    );
+    if (
+      fs.existsSync(
+        path.resolve(
+          path.join(`${host.fqdn}/public`, baseFilePath) //req.path
+        )
+      )
+    ) {
+      return res.sendFile(
+        path.resolve(
+          path.join(`${host.fqdn}/public`, baseFilePath) //req.path
+        )
+      );
+    } else return next();
+  });
+
   vhostApp.use(
     cors(handleCorsDelegation()),
     express.json(),
@@ -95,25 +118,15 @@ const StartHost = (host) => {
     }),
     serveIndex(`${host.fqdn}/public/*`, { icons: true })
   );
-  vhostApp.get("/*", (req, res, next) => {
-    //try base static files first
-    const baseFilePath = req.path;
-    return res.sendFile(
-      path.resolve(
-        path.join(`${host.fqdn}/public`, baseFilePath) //req.path
-      )
-    );
-  });
+
   console.log("Loading Virtual Host");
   primaryService.use(vhost(host.fqdn, vhostApp));
   console.log("Loading Virtual Host Subdomain");
   primaryService.use(vhost(`www.${host.fqdn}`, vhostApp));
 };
-hosts.forEach(
-  h => {
-    StartHost(h)
-  }
-);
+hosts.forEach((h) => {
+  StartHost(h);
+});
 if (process.env.NODEJS_WEBHOST_ENABLE_SSL === true) {
   httpsServer.listen(PORT, process.env.NODEJS_WEBHOST_BIND_TO_IP, () => {});
 }
