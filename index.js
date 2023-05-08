@@ -89,7 +89,7 @@ let sslCredentials = hosts.map((h) => {
 let httpsServer;
 let httpServer;
 console.log("SSL ENABLED : ", process.env.NODEJS_WEBHOST_ENABLE_SSL);
-if (process.env.NODEJS_WEBHOST_ENABLE_SSL === true) {
+if (process.env.NODEJS_WEBHOST_ENABLE_SSL === 'true') {
   console.log("SSL Sever Initiated");
   httpsServer = vhttps.createServer(
     defaultCredential,
