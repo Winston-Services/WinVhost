@@ -90,7 +90,7 @@ const StartHost = (host) => {
       path.join(`${host.fqdn}/public`, baseFilePath) //req.path
     );
 
-    if (fs.existsSync(reqPath) && fs.lstatSync(reqPath).isDirectory()) {
+    if (fs.existsSync(reqPath) && !fs.lstatSync(reqPath).isDirectory()) {
       return res.sendFile(
         path.resolve(
           path.join(`${host.fqdn}/public`, baseFilePath) //req.path
