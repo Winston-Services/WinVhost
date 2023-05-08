@@ -85,18 +85,12 @@ const StartHost = (host) => {
   vhostApp.get("/*", (req, res, next) => {
     //try base static files first
     const baseFilePath = req.path;
-    console.log(
-      path.resolve(
-        path.join(`${host.fqdn}/public`, baseFilePath) //req.path
-      )
+
+    const reqPath = path.resolve(
+      path.join(`${host.fqdn}/public`, baseFilePath) //req.path
     );
-    if (
-      fs.existsSync(
-        path.resolve(
-          path.join(`${host.fqdn}/public`, baseFilePath) //req.path
-        )
-      )
-    ) {
+
+    if (fs.existsSync(reqPath) && fs.lstatSync(reqPath).isDirectory()) {
       return res.sendFile(
         path.resolve(
           path.join(`${host.fqdn}/public`, baseFilePath) //req.path
