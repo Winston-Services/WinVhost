@@ -18,9 +18,9 @@
         "redirect" : true,
         "ssl": {
             "hostname": "winston.services",
-            "cert": "undefined",
-            "ca": "undefined",
-            "key": "undefined"
+            "cert": "/etc/letsencrypt/live/winston.services/cert.pem",
+            "ca": "/etc/letsencrypt/live/winston.services/chain.pem",
+            "key": "/etc/letsencrypt/live/winston.services/privkey.pem"
         }
     },
     {

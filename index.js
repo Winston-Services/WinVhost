@@ -37,9 +37,9 @@ hosts.forEach((h) => {
 
 const defaultCredential = process.env.NODEJS_WEBHOST_ENABLE_SSL
   ? {
-      cert: process.env.NODEJS_WEBHOST_CERT,
-      ca: process.env.NODEJS_WEBHOST_CA,
-      key: process.env.NODEJS_WEBHOST_KEY
+      cert: fs.readFileSync(path.resolve(process.env.NODEJS_WEBHOST_CERT)).toString(),
+      ca: fs.readFileSync(path.resolve(process.env.NODEJS_WEBHOST_CA)).toString(),
+      key: fs.readFileSync(path.resolve(process.env.NODEJS_WEBHOST_KEY)).toString()
     }
   : {
       cert: undefined,
@@ -62,7 +62,13 @@ function handleCorsDelegation(overrideCallback = null) {
   };
 }
 
-let sslCredentials = hosts.map((h) => h.ssl);
+let sslCredentials = hosts.map((h) => {
+  return {
+    cert: fs.readFileSync(path.resolve(h.ssl.cert)).toString(),
+    ca: fs.readFileSync(path.resolve(h.ssl.ca)).toString(),
+    key: fs.readFileSync(path.resolve(h.ssl.key)).toString()
+  };
+});
 
 let httpsServer;
 let httpServer;
@@ -112,7 +118,7 @@ const StartHost = (host) => {
     } else {
       return res.sendFile(
         path.resolve(
-          path.join(`${host.fqdn}/public`, 'index.html') //req.path
+          path.join(`${host.fqdn}/public`, "index.html") //req.path
         )
       );
     }
