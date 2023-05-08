@@ -25,8 +25,6 @@ primaryService.options(
   })
 );
 
-const PORT = process.env.NODEJS_WEBHOST_PORT || 80; //80 & 443 are the common ports for Web Protocols.'
-
 const corsWhitelist = [];
 
 hosts.forEach((h) => {
@@ -132,8 +130,8 @@ hosts.forEach((h) => {
   StartHost(h);
 });
 if (process.env.NODEJS_WEBHOST_ENABLE_SSL === true) {
-  httpsServer.listen(PORT, process.env.NODEJS_WEBHOST_BIND_TO_IP, () => {});
+  httpsServer.listen(443, process.env.NODEJS_WEBHOST_BIND_TO_IP, () => {});
 }
-httpServer.listen(PORT, process.env.NODEJS_WEBHOST_BIND_TO_IP, () => {});
+httpServer.listen(80, process.env.NODEJS_WEBHOST_BIND_TO_IP, () => {});
 
 // primaryService.close();
