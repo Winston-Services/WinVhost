@@ -82,6 +82,19 @@ const StartHost = (host) => {
   const vhostApp = express();
   vhostApp.disable("x-powered-by");
   vhostApp.set("X-Powered-By", process.env.NODEJS_WEBHOST_NETWORK_NAME);
+  vhostApp.use(
+    cors(handleCorsDelegation()),
+    express.json(),
+    express.urlencoded({
+      extended: true
+    }),
+    express.static(host.fqdn, {
+      dotfiles: "allow",
+      redirect: host.redirect,
+      index: "index.html"
+    }),
+    serveIndex(`${host.fqdn}/public/*`, { icons: true })
+  );
   vhostApp.get("/*", (req, res, next) => {
     //try base static files first
     const baseFilePath = req.path;
@@ -98,21 +111,6 @@ const StartHost = (host) => {
       );
     } else return next();
   });
-
-  vhostApp.use(
-    cors(handleCorsDelegation()),
-    express.json(),
-    express.urlencoded({
-      extended: true
-    }),
-    express.static(host.fqdn, {
-      dotfiles: "allow",
-      redirect: host.redirect,
-      index: "index.html"
-    }),
-    serveIndex(`${host.fqdn}/public/*`, { icons: true })
-  );
-
   console.log("Loading Virtual Host");
   primaryService.use(vhost(host.fqdn, vhostApp));
   console.log("Loading Virtual Host Subdomain");
